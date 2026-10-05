@@ -8,7 +8,7 @@ from grader_contracts.correlation_tasks import BrainCorrelationSummary, BrainDat
 
 def analyze_brain_correlations(data: BrainDataInput) -> BrainCorrelationSummary:
 
-    df = pd.read_csv(data.csv_path, sep='\t', na_values='NA')
+    df = pd.read_csv(data.csv_path, '\t', 'NA')
     men = df[df['Gender'] == 'Male']
     women = df[df['Gender'] == 'Female']
     features = ['FSIQ', 'VIQ', 'PIQ', 'Weight', 'Height']
