@@ -9,10 +9,11 @@ from grader_contracts.pandas_tasks import TitanicInput, TitanicSummary
 def analyze_titanic(data: TitanicInput) -> TitanicSummary:
     df = pd.read_csv(data.csv_path)
 
-    missing = df.isnull().sum()
+    missing = df.isnull().sum().to_dict()
     older_than_30 = int((df['Age'] > 30).sum())
-    mean_age_by_class = df.groupby('Pclass')['Age'].mean()
-    survival_by_class = df.groupby('Pclass')['Survived'].mean()
+
+    mean_age_by_class = {int(k): v for k, v in df.groupby('Pclass')['Age'].mean().items()}
+    survival_by_class = {int(k): v for k, v in df.groupby('Pclass')['Survived'].mean().items()}
     top_5_fare = df.nlargest(5, 'Fare')['Fare'].tolist()
 
     return TitanicSummary(missing, older_than_30, mean_age_by_class, survival_by_class, top_5_fare)
